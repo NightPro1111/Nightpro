@@ -70,6 +70,43 @@
       console.log('Successful loaded website animation');
     });
   </script>
+  <script>
+    document.addEventListener("DOMContentLoaded", () => {
+        const titles = ["Hi Guys", "Welcome To", "My Profile", "Dinh Phuc"]; // Các tiêu đề cần chạy
+        let currentTitleIndex = 0; // Vị trí của tiêu đề hiện tại
+        let charIndex = 0; // Vị trí ký tự hiện tại trong tiêu đề
+        let isDeleting = false; // Trạng thái đang xóa hay viết
+
+        function typeEffect() {
+            const currentTitle = titles[currentTitleIndex]; // Lấy tiêu đề hiện tại
+            const displayText = currentTitle.substring(0, charIndex) + "_"; // Chuỗi hiển thị với "_"
+
+            document.title = displayText; // Cập nhật tiêu đề trang
+
+            // Điều chỉnh chỉ số ký tự khi viết và xóa
+            if (!isDeleting && charIndex < currentTitle.length) {
+                charIndex++; // Tiến thêm một ký tự khi viết
+            } else if (isDeleting && charIndex > 0) {
+                charIndex--; // Lùi lại một ký tự khi xóa
+            } else {
+                // Đổi trạng thái sau khi hoàn thành viết/xóa
+                if (!isDeleting) {
+                    isDeleting = true; // Bắt đầu xóa sau khi viết xong
+                } else {
+                    isDeleting = false; // Chuyển sang tiêu đề tiếp theo sau khi xóa xong
+                    charIndex = 0; // Reset chỉ số ký tự
+                    currentTitleIndex = (currentTitleIndex + 1) % titles.length; // Chuyển sang tiêu đề tiếp theo (lặp lại)
+                }
+            }
+
+            // Tùy chỉnh tốc độ viết và xóa
+            const speed = isDeleting ? 120 : 150; // Xóa nhanh hơn viết
+            setTimeout(typeEffect, speed);
+        }
+
+        typeEffect(); // Gọi hàm hiệu ứng khi trang tải
+    });
+  </script>
   <script src="script_obf.js"></script>
   
 </body>
